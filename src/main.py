@@ -1,7 +1,11 @@
 import pandas as pd
 import click
 
-from src.data_preprocessing.eda import heatmap_corr_plot
+from src.data_preprocessing.eda import (
+    heatmap_corr_plot,
+    loan_status_count,
+    loan_status_grade,
+)
 
 from .modeling.model import predict_dataset, train_dataset
 from .modeling.utils import (
@@ -10,7 +14,7 @@ from .modeling.utils import (
     cross_validation_report,
     xgboost_tree_plot,
 )
-from .data_preprocessing import preprocessing
+from .data_preprocessing.preprocessing import preprocessing, remove_redundant_target
 
 
 @click.command()
@@ -21,7 +25,10 @@ def main(path_dataset):
 
     df = pd.read_csv(path_dataset)
     heatmap_corr_plot(df)
-    df, X_train, X_test, y_train, y_test = preprocessing.preprocessing(df)
+    _df = remove_redundant_target(df)
+    loan_status_count(_df)
+    loan_status_grade(_df)
+    df, X_train, X_test, y_train, y_test = preprocessing(df)
 
     ###############################################################
     model, results = train_dataset(X_train, y_train, X_test, y_test)
