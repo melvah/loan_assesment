@@ -1,7 +1,8 @@
 from typing import List
+
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 
 def drop_waste_columns(df: pd.DataFrame):
@@ -125,6 +126,14 @@ def scaling_splitting(df: pd.DataFrame):
 
 
 def preprocessing(df: pd.DataFrame):
+    """This fucntion puts all the preprocessing steps altogether
+
+    Args:
+        df (pd.DataFrame): [description]
+
+    Returns:
+        [type]: [description]
+    """
     df = drop_waste_columns(df)
 
     cols_to_keep = columns_to_keep(df)

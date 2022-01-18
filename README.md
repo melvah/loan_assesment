@@ -123,3 +123,7 @@ Also, please make sure that you are in the same root as the `README.md` file.
   ```
   python -m src.main
   ```  
+* If the dataset is loacted in another folder you can run the code using the following command:
+    ```
+    python -m src.main -p PATH_TO_DATASET
+    ```

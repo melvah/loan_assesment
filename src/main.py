@@ -1,5 +1,5 @@
-import pandas as pd
 import click
+import pandas as pd
 
 from src.data_preprocessing.eda import (
     heatmap_corr_plot,
@@ -7,15 +7,15 @@ from src.data_preprocessing.eda import (
     loan_status_grade,
 )
 
+from .data_preprocessing.preprocessing import preprocessing, remove_redundant_target
 from .modeling.model import predict_dataset, train_dataset
 from .modeling.utils import (
+    cross_validation_report,
     feature_importance_plot,
     optimal_num_tree_graph,
-    cross_validation_report,
     plot_confusion_matrix,
     xgboost_tree_plot,
 )
-from .data_preprocessing.preprocessing import preprocessing, remove_redundant_target
 
 
 @click.command()

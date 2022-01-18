@@ -1,12 +1,12 @@
 import os
 import warnings
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
-import xgboost as xgb
-import itertools
-from sklearn.metrics import confusion_matrix
 import seaborn as sns
+import xgboost as xgb
+from sklearn.metrics import confusion_matrix
 
 
 def cross_validation_report(X_train, y_train):
