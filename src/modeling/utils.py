@@ -1,8 +1,12 @@
-import warnings
-import pandas as pd
-import matplotlib.pyplot as plt
-import xgboost as xgb
 import os
+import warnings
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import xgboost as xgb
+import itertools
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
 
 
 def cross_validation_report(X_train, y_train):
@@ -108,3 +112,11 @@ def optimal_num_tree_graph(model, results):
 def check_path():
     if not os.path.exists("plots/"):
         os.mkdir("plots/")
+
+
+def plot_confusion_matrix(y_test, y_pred):
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    plt.figure(figsize=(16, 9))
+    sns.heatmap(conf_matrix / np.sum(conf_matrix), annot=True, fmt=".2%", cmap="Blues")
+    check_path()
+    plt.savefig("plots/confusion_matrix.png")

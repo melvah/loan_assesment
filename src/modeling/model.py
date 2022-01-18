@@ -1,8 +1,9 @@
-import xgboost as xgb
-from sklearn.metrics import accuracy_score
 import os
 import pathlib
 import pickle
+
+import xgboost as xgb
+from sklearn.metrics import accuracy_score, f1_score
 
 
 def train_dataset(
@@ -75,7 +76,8 @@ def predict_dataset(model, X_test, y_test):
 
     y_pred = model.predict(X_test, ntree_limit=model.best_ntree_limit)
     acc = accuracy_score(y_test, y_pred)
-    return y_pred, acc
+    f1_sc = f1_score(y_test, y_pred)
+    return y_pred, acc, f1_sc
 
 
 def save_model(model: xgb.sklearn.XGBClassifier, path_to_save: str = "."):

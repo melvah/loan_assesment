@@ -12,6 +12,7 @@ from .modeling.utils import (
     feature_importance_plot,
     optimal_num_tree_graph,
     cross_validation_report,
+    plot_confusion_matrix,
     xgboost_tree_plot,
 )
 from .data_preprocessing.preprocessing import preprocessing, remove_redundant_target
@@ -22,18 +23,22 @@ from .data_preprocessing.preprocessing import preprocessing, remove_redundant_ta
     "-p", "--path-dataset", prompt=False, default="data/accepted_2007_to_2018Q4.csv"
 )
 def main(path_dataset):
-
+    # Reading the dataset using pandas
     df = pd.read_csv(path_dataset)
+    ## --------- EDA ---------------
     heatmap_corr_plot(df)
     _df = remove_redundant_target(df)
     loan_status_count(_df)
     loan_status_grade(_df)
+    ## --------- preprocessing ---------------
     df, X_train, X_test, y_train, y_test = preprocessing(df)
 
-    ###############################################################
+    ## --------- training and validation
     model, results = train_dataset(X_train, y_train, X_test, y_test)
-    _, acc = predict_dataset(model, X_test, y_test)
-    print(f"acc is {acc}")
+    y_pred, acc, f1_sc = predict_dataset(model, X_test, y_test)
+    print(f"The accuracy of the model is: {acc}")
+    print(f"The F1-Score is {f1_sc}")
+    plot_confusion_matrix(y_test, y_pred)
     optimal_num_tree_graph(model, results)
     params = cross_validation_report(X_train, y_train)
     xgboost_tree_plot(X_train, y_train, params)

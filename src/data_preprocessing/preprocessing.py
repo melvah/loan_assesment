@@ -85,7 +85,7 @@ def categorical_cols(df: pd.DataFrame) -> List:
     return list(set(cols_list) - set(numeric_cols))
 
 
-def drop_cols_more_than_ten_cat(df: pd.DataFrame) -> List:
+def drop_cols_more_than_certain_cat(df: pd.DataFrame) -> List:
     cols_to_drop = [col for col in df.columns if len(df[col].unique()) > 11]
     return cols_to_drop
 
@@ -136,7 +136,7 @@ def preprocessing(df: pd.DataFrame):
     df = remove_redundant_target(df)
     df = map_chargeoff_to_one(df)
     catego_cols = categorical_cols(df)
-    cols_to_drop = drop_cols_more_than_ten_cat(df[catego_cols])
+    cols_to_drop = drop_cols_more_than_certain_cat(df[catego_cols])
     df.drop(columns=cols_to_drop, inplace=True)
     cols_with_one_cat = drop_cols_with_one_cat(df)
 
